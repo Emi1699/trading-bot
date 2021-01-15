@@ -7,6 +7,7 @@ import numpy as np
 
 from oandapyV20 import API
 import oandapyV20.endpoints.trades as trades
+import oandapyV20.endpoints.positions as positions
 # import pandas as pd
 
 #read access tokens from external file
@@ -50,4 +51,10 @@ r = trades.TradesList(accountID)
 print("REQUEST:{}".format(r))
 rv = api.request(r)
 print("RESPONSE:\n{}".format(json.dumps(rv, indent=2)))
+
+r = positions.OpenPositions(accountID=accountID)
+openPos = api.request(r)
+
+for pos in openPos:
+	print(openPos)
 
