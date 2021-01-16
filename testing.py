@@ -1,14 +1,15 @@
 import requests
 import json
 import numpy as np
-
-# import sys
-# sys.path.insert(1, '/oanda-api-v20')
+# import logs
 
 from oandapyV20 import API
 import oandapyV20.endpoints.trades as trades
 import oandapyV20.endpoints.positions as positions
 # import pandas as pd
+
+import sys
+# sys.path.insert(1, '/oanda-api-v20')
 
 #read access tokens from external file
 filepath = '/Users/emi_buliga/Desktop/tokens.txt'
@@ -58,3 +59,5 @@ openPos = api.request(r)
 for pos in openPos:
 	print(openPos)
 
+# for p in sys.path:
+# 	print(p)
