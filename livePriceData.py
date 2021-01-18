@@ -9,16 +9,48 @@ import dataManipulation as dm
 api = API(access_token=toks.apiToken)
 params = {"instruments": "EUR_USD"}
 
-r = pricing.PricingInfo(accountID=toks.accToken, params=params)
+r = pricing.PricingStream(accountID=toks.accToken, params=params)
 rv = api.request(r)
 
-instrumentData = r.response['prices'][0]
-time = instrumentData['time']
-newTime = dm.newTime(time)
+maxrecs = 1
+for tick in rv:
+	(calendarDate, clockTime) = dm.newTime(tick['time'])
+	asks = []
+	bids = []
 
-print(str(instrumentData['instrument']) + " @ " + newTime[1] + " - " + newTime[0])
+	if ('asks' in tick) and ('bids' in tick):
+		for ask in tick['asks']:
+			asks.append(ask['price'])
 
-askPrices = str(instrumentData['asks'])
+		for bid in tick['bids']:
+			bids.append(bid['price'])
+
+	askBid = zip(asks, bids)
+	averages = []
+	for pair in askBid:
+		average = (float(pair[0]) + float(pair[1])) / 2
+		averages.append(float(str(average)[:7]))
+
+	# print(json.dumps(tick, indent=4),",")
+
+	if tick['type'] == 'PRICE':
+		print(str(tick['instrument']) + " @ " + clockTime + " -> " + str(averages) + "  " + calendarDate)
+	else:
+		# print(str(tick['type']) + " @ " + clockTime + " - " + calendarDate)
+		print("---")
+
+	if maxrecs == 0:
+		r.terminate("maxrecs records received")
+
+# print(rv)
+# # r.response['prices'][0]
+# instrumentData = rv['prices'][0]
+# time = instrumentData['time']
+# newTime = dm.newTime(time)
+
+# print(str(instrumentData['instrument']) + " @ " + newTime[1] + " - " + newTime[0])
+
+# askPrices = str(instrumentData['asks'])
 
 # while True:
 # 	print(r.response)
