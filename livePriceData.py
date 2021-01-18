@@ -6,42 +6,47 @@ import json
 import time
 import dataManipulation as dm
 
-api = API(access_token=toks.apiToken)
-params = {"instruments": "EUR_USD"}
+def init(currencyPair):
+	api = API(access_token=toks.apiToken)
+	params = {"instruments": "EUR_USD"}
 
-r = pricing.PricingStream(accountID=toks.accToken, params=params)
-rv = api.request(r)
+	r = pricing.PricingStream(accountID=toks.accToken, params=params)
 
-maxrecs = 1
-for tick in rv:
-	(calendarDate, clockTime) = dm.newTime(tick['time'])
-	asks = []
-	bids = []
+	return api.request(r)
 
-	if ('asks' in tick) and ('bids' in tick):
-		for ask in tick['asks']:
-			asks.append(ask['price'])
+def streamData(currencyPair):
+	rv = init(currencyPair)
+	maxrecs = 1
+	for tick in rv:
+		(calendarDate, clockTime) = dm.newTime(tick['time'])
+		asks = []
+		bids = []
 
-		for bid in tick['bids']:
-			bids.append(bid['price'])
+		if ('asks' in tick) and ('bids' in tick):
+			for ask in tick['asks']:
+				asks.append(ask['price'])
 
-	askBid = zip(asks, bids)
-	averages = []
-	for pair in askBid:
-		average = (float(pair[0]) + float(pair[1])) / 2
-		averages.append(float(str(average)[:7]))
+			for bid in tick['bids']:
+				bids.append(bid['price'])
 
-	# print(json.dumps(tick, indent=4),",")
+		askBid = zip(asks, bids)
+		averages = []
 
-	if tick['type'] == 'PRICE':
-		print(str(tick['instrument']) + " @ " + clockTime + " -> " + str(averages) + "  " + calendarDate)
-	else:
-		# print(str(tick['type']) + " @ " + clockTime + " - " + calendarDate)
-		print("---")
+		for pair in askBid:
+			askBidDifference = (float(pair[0]) + float(pair[1])) / 2
+			averages.append(askBidDifference)
 
-	if maxrecs == 0:
-		r.terminate("maxrecs records received")
+		if tick['type'] == 'PRICE':
+			average = sum(averages) / len(averages)
+			print(str(tick['instrument']) + " @ " + clockTime + " -> " + str(average) + "  " + calendarDate)
+		else:
+			# print(str(tick['type']) + " @ " + clockTime + " - " + calendarDate)
+			print("---")
 
+		if maxrecs == 0:
+			r.terminate("maxrecs records received")
+
+streamData("EUR_USD")
 # print(rv)
 # # r.response['prices'][0]
 # instrumentData = rv['prices'][0]
