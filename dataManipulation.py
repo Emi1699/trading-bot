@@ -1,7 +1,7 @@
 
 #write calendar date as DD/MM/YYY AND
 #only get the seconds, minutes and hour component of the time (without miliseconds)
-def newTime(oldTime):
+def formattedTime(oldTime):
 	#calendar date computation
 	calendarDateOld = oldTime[:10]
 
