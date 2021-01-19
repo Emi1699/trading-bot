@@ -1,4 +1,4 @@
-
+import os
 
 class FileHandler:
 	def __init__(self):
@@ -10,16 +10,36 @@ class FileHandler:
 		f.write(content + "\n")
 		f.close()
 
-	#creates a new entry in the specified file from the 'trades' directory
+	#creates a new entry in the specified file from the 'open trades' directory
 	#the line containts the id, number of units and price of the specified trade
 	def newEntry_tradePlaced(self, file, content):
-		f = open("trades/" + file, 'a+')
+		f = open("open trades/" + file, 'a+')
+		f.write(content + "\n")
+		f.close()
+
+	#create new entry in the specified file from the 'closed trades' directory
+	#the line contains the id and the P/L of the trade (for now!!!)
+	def newEntry_tradeClosed(self, file, content):
+		f = open("closed trades/" + file, 'a+')
 		f.write(content + "\n")
 		f.close()
 
 	#when closing a trade, we also want to delete it from the 'trades' directory
-	def removeEntry_Trade(self, tradeID, file):
-		with open('trades/' + file) as oldfile, open('trades/' + file, 'w') as newfile:
+	#at the same time, add it to a 'closed trades' directory
+	def removeEntry_trade(self, tradeID, file):
+		#save file content into an array
+		lines = []
+		with open('open trades/' + file) as oldfile:
 		    for line in oldfile:
-		        if not tradeID in line:
-		            newfile.write(line)
+		    	lines.append(line)
+
+		#remove the file and create it again (empty)
+		os.remove('open trades/' + file)
+		f = open('open trades/' + file, 'a+')
+
+		#write the content to file, except for the content we wish to delete
+		for line in lines:
+			if not str(tradeID) in line:
+				f.write(line)
+
+
