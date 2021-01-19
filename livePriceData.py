@@ -51,7 +51,7 @@ class LiveDataStream():
 				currencyPair = tick['instrument']
 				average = str(sum(averages) / len(averages))[:7]
 
-				self.fileHandler.newEntryLiveData(currencyPair, str(average) + ", " + str(clockTime) + ", " + str(calendarDate))
+				self.fileHandler.newEntry_liveData(currencyPair, str(average) + ", " + str(clockTime) + ", " + str(calendarDate))
 				print(currencyPair + " @ " + clockTime + " -> " + str(average) + "  " + calendarDate)
 			else:
 				# print(str(tick['type']) + " @ " + clockTime + " - " + calendarDate)
