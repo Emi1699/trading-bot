@@ -22,7 +22,7 @@ class LiveDataStream():
 		params = {"instruments": self.currencyPairs}
 
 		r = pricing.PricingStream(accountID = self.accToken, params = params)
-		
+
 		return api.request(r)
 
 	def streamData(self):
@@ -51,7 +51,7 @@ class LiveDataStream():
 				currencyPair = tick['instrument']
 				average = str(sum(averages) / len(averages))[:7]
 
-				self.fileHandler.newEntry(currencyPair, str(average) + ", " + str(clockTime) + ", " + str(calendarDate))
+				self.fileHandler.newEntryLiveData(currencyPair, str(average) + ", " + str(clockTime) + ", " + str(calendarDate))
 				print(currencyPair + " @ " + clockTime + " -> " + str(average) + "  " + calendarDate)
 			else:
 				# print(str(tick['type']) + " @ " + clockTime + " - " + calendarDate)
