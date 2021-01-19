@@ -1,6 +1,6 @@
 
 
-class fileHandler:
+class FileHandler:
 	def __init__(self):
 		print("\nfileHandler Object created.\n")
 

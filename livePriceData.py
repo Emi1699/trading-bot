@@ -7,7 +7,7 @@ import time
 import dataManipulation as dm
 import fileHandler as fh
 
-class liveDataStream():
+class LiveDataStream():
 	def __init__(self, currencyPairs):
 		print("\nliveDataStream Object created.\n")
 
@@ -61,7 +61,7 @@ class liveDataStream():
 		return self.currencyPairs.split(',')
 
 
-liveStream = liveDataStream("EUR_USD,EUR_GBP")
+liveStream = LiveDataStream("EUR_USD,EUR_GBP")
 liveStream.streamData()
 print(liveStream.getStreamingCurrencyPairs())
 
