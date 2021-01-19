@@ -5,6 +5,6 @@ class FileHandler:
 		print("\nfileHandler Object created.\n")
 
 	def newEntry(self, file, content):
-		f = open(file, 'a+')
+		f = open("price data/" + file, 'a+')
 		f.write(content + "\n")
 		f.close()
