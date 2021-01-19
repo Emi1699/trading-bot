@@ -5,17 +5,18 @@ import toks
 import json
 import time
 import dataManipulation as dm
+import fileHandler
 
-def init(currencyPair):
+def init(currencyPairs):
 	api = API(access_token=toks.apiToken)
-	params = {"instruments": "EUR_USD"}
+	params = {"instruments": currencyPairs}
 
 	r = pricing.PricingStream(accountID=toks.accToken, params=params)
 
 	return api.request(r)
 
-def streamData(currencyPair):
-	rv = init(currencyPair)
+def streamData(currencyPairs):
+	rv = init(currencyPairs)
 	maxrecs = 1
 	for tick in rv:
 		(calendarDate, clockTime) = dm.newTime(tick['time'])
@@ -46,25 +47,8 @@ def streamData(currencyPair):
 		if maxrecs == 0:
 			r.terminate("maxrecs records received")
 
-streamData("EUR_USD")
-# print(rv)
-# # r.response['prices'][0]
-# instrumentData = rv['prices'][0]
-# time = instrumentData['time']
-# newTime = dm.newTime(time)
+streamData("EUR_USD,EUR_GBP")
 
-# print(str(instrumentData['instrument']) + " @ " + newTime[1] + " - " + newTime[0])
 
-# askPrices = str(instrumentData['asks'])
 
-# while True:
-# 	print(r.response)
-# 	time.sleep(0.1)
 
-# for tick in rv:
-# 	print(tick)
-
-# for ticks in rv:
-# 	print(json.dumps(rv))
-# 	if maxrecs == 0:
-# 		r.terminate("maxrecs records received")
