@@ -5,25 +5,28 @@ import toks
 import json
 import time
 import dataManipulation as dm
-from fileHandler import fileHandler as fh
+import fileHandler as fh
 
 class liveDataStream():
-	def __init__(self):
+	def __init__(self, currencyPairs):
 		print("\nliveDataStream Object created.\n")
 
-	def connect(self, currencyPairs):
-		api = API(access_token = toks.apiToken)
-		params = {"instruments": currencyPairs}
+		self.fileHandler = fh.fileHandler()
+		self.currencyPairs = currencyPairs
 
-		r = pricing.PricingStream(accountID=toks.accToken, params=params)
+	def connect(self):
+		api = API(access_token = toks.apiToken)
+		params = {"instruments": self.currencyPairs}
+
+		r = pricing.PricingStream(accountID = toks.accToken, params = params)
 
 		return api.request(r)
 
-	def streamData(self, currencyPairs):
-		rv = self.connect(currencyPairs)
+	def streamData(self):
+		rv = self.connect()
 		# maxrecs = 1
 		for tick in rv:
-			(calendarDate, clockTime) = dm.newTime(tick['time'])
+			(calendarDate, clockTime) = dm.formattedTime(tick['time'])
 			asks = []
 			bids = []
 
@@ -42,8 +45,11 @@ class liveDataStream():
 				averages.append(askBidDifference)
 
 			if tick['type'] == 'PRICE':
-				average = sum(averages) / len(averages)
-				print(str(tick['instrument']) + " @ " + clockTime + " -> " + str(average) + "  " + calendarDate)
+				currencyPair = tick['instrument']
+				average = str(sum(averages) / len(averages))[:7]
+
+				self.fileHandler.newEntry(currencyPair, str(average) + ", " + str(clockTime) + ", " + str(calendarDate))
+				print(currencyPair + " @ " + clockTime + " -> " + str(average) + "  " + calendarDate)
 			else:
 				# print(str(tick['type']) + " @ " + clockTime + " - " + calendarDate)
 				print("---")
@@ -51,8 +57,13 @@ class liveDataStream():
 			# if maxrecs == 0:
 			# 	r.terminate("maxrecs records received")
 
-liveStream = liveDataStream()
-liveStream.streamData("EUR_USD,EUR_GBP")
+	def getStreamingCurrencyPairs(self):
+		return self.currencyPairs.split(',')
+
+
+liveStream = liveDataStream("EUR_USD,EUR_GBP")
+liveStream.streamData()
+print(liveStream.getStreamingCurrencyPairs())
 
 
 
