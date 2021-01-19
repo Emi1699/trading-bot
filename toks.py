@@ -1,10 +1,18 @@
-#read access tokens from external file
 
-filepath = '/Users/emi_buliga/Desktop/tokens.txt'
-tokens = []
-with open(filepath, 'r') as f:
-	for line in f:
-		tokens.append(line.strip())
+class AccessTokens():
+	def __init__(self):
+		print("\nAccessTokens Object created.\n")
 
-apiToken = tokens[0]
-accToken = tokens[1]
+		#read access tokens from external file
+		filepath = '/Users/emi_buliga/Desktop/tokens.txt'
+		self.tokens = []
+		with open(filepath, 'r') as f:
+			for line in f:
+				self.tokens.append(line.strip())
+
+	def apiToken(self):
+		return self.tokens[0]
+
+	def accToken(self):
+		return self.tokens[1]
+

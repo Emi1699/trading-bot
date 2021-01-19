@@ -11,14 +11,16 @@ class LiveDataStream():
 	def __init__(self, currencyPairs):
 		print("\nliveDataStream Object created.\n")
 
-		self.fileHandler = fh.fileHandler()
+		self.fileHandler = fh.FileHandler()
 		self.currencyPairs = currencyPairs
+		self.apiToken = toks.AccessTokens().apiToken()
+		self.accToken = toks.AccessTokens().accToken()
 
 	def connect(self):
-		api = API(access_token = toks.apiToken)
+		api = API(access_token = self.apiToken)
 		params = {"instruments": self.currencyPairs}
 
-		r = pricing.PricingStream(accountID = toks.accToken, params = params)
+		r = pricing.PricingStream(accountID = self.accToken, params = params)
 
 		return api.request(r)
 
