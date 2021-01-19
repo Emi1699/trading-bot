@@ -70,7 +70,8 @@ class Trade():
 trade = Trade()
 
 # trade.placeMarketOrder(1000, "EUR_GBP")
-trade.closeTrade(131);
+trade.closeTrade(134);
+trade.closeTrade(137);
 
 
 
