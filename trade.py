@@ -14,7 +14,7 @@ class Trade():
 		self.api = API(access_token = self.apiToken)
 		self.fileHandler = fh.FileHandler()
 
-	def placeMarketOrder(self, units, instrument):
+	def placeTrade(self, units, instrument):
 		orderConf = {
 	         "order": {
 	            "units": str(units),
