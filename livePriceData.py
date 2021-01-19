@@ -2,26 +2,27 @@ import oandapyV20
 from oandapyV20 import API
 import oandapyV20.endpoints.pricing as pricing
 import toks
+import toks
 import json
 import time
 import dataManipulation as dm
 import fileHandler as fh
 
 class LiveDataStream():
-	def __init__(self, currencyPairs):
-		print("\nliveDataStream Object created.\n")
+	def __init__(self, currencyPairs, apiToken = toks.AccessTokens().apiToken(), accToken = toks.AccessTokens().accToken()):
+		print("\nrequesting live data ...\n")
 
 		self.fileHandler = fh.FileHandler()
 		self.currencyPairs = currencyPairs
-		self.apiToken = toks.AccessTokens().apiToken()
-		self.accToken = toks.AccessTokens().accToken()
+		self.apiToken = apiToken
+		self.accToken = accToken
 
 	def connect(self):
 		api = API(access_token = self.apiToken)
 		params = {"instruments": self.currencyPairs}
 
 		r = pricing.PricingStream(accountID = self.accToken, params = params)
-
+		
 		return api.request(r)
 
 	def streamData(self):
