@@ -2,4 +2,5 @@ oanda-api-v20/
 v20.log
 logs.py
 price data
-trades
+open trades
+closed trades
