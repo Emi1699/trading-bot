@@ -42,4 +42,21 @@ class FileHandler:
 			if not str(tradeID) in line:
 				f.write(line)
 
+	#check if a file is empty
+	#used in closing all trades in the User class
+	def isEmpty(self, instrument):
+		if os.stat('open trades/' + instrument).st_size == 0:
+			return True
+
+		return False
+
+
+
+
+
+
+
+
+
+
 
