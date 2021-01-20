@@ -44,8 +44,8 @@ class Trade():
 
 		except V20Error as e:
 			print("V20Error: {}".format(e))
-		else:
-			print("Response: {}\n{}".format(r.status_code, json.dumps(response, indent=2)))
+		# else:
+		# 	print("Response: {}\n{}".format(r.status_code, json.dumps(response, indent=2)))
 
 	def closeTrade(self, trade_id):
 		r = trades.TradeClose(self.accToken, tradeID = str(trade_id))
@@ -58,7 +58,7 @@ class Trade():
 		realizedPL = str(response['orderFillTransaction']['tradesClosed'][0]['realizedPL'])
 
 
-		print("RESP:\n{} ".format(json.dumps(response, indent=2)))
+		# print("RESP:\n{} ".format(json.dumps(response, indent=2)))
 
 		#remove trade from 'open trades' directory
 		self.fileHandler.removeEntry_trade(trade_id, instrument)
@@ -67,11 +67,11 @@ class Trade():
 		content = "#" + closedTradeId + " @ " + closingPrice + " // PL: " + realizedPL + "   ~~"
 		self.fileHandler.newEntry_tradeClosed(instrument, content)
 
-trade = Trade()
+# trade = Trade()
 
 # trade.placeMarketOrder(1000, "EUR_GBP")
-trade.closeTrade(134)
-trade.closeTrade(137)
+# trade.closeTrade(134)
+# trade.closeTrade(137)
 
 
 
