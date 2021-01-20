@@ -1,8 +1,8 @@
 import os
 
 class FileHandler:
-	def __init__(self):
-		print("\nfileHandler Object created.\n")
+	def __init__(self): pass
+		# print("\nfileHandler Object created.\n")
 
 	#creates a new entry in the specified file from the 'trades' directory
 	def newEntry_liveData(self, file, content):

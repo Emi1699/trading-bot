@@ -7,7 +7,7 @@ import fileHandler as fh
 
 class Trade():
 	def __init__(self, apiToken = toks.AccessTokens().apiToken(), accToken = toks.AccessTokens().accToken()):
-		print("\n Trade Object created.\n")
+		# print("\n Trade Object created.\n")
 
 		self.apiToken = apiToken
 		self.accToken = accToken
@@ -57,7 +57,6 @@ class Trade():
 		instrument = str(response['orderFillTransaction']['instrument'])
 		realizedPL = str(response['orderFillTransaction']['tradesClosed'][0]['realizedPL'])
 
-
 		# print("RESP:\n{} ".format(json.dumps(response, indent=2)))
 
 		#remove trade from 'open trades' directory
@@ -66,6 +65,8 @@ class Trade():
 		#add new entry in the 'closed trades' directory
 		content = "#" + closedTradeId + " @ " + closingPrice + " // PL: " + realizedPL + "   ~~"
 		self.fileHandler.newEntry_tradeClosed(instrument, content)
+
+		return content
 
 # trade = Trade()
 

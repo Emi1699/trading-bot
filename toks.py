@@ -1,7 +1,7 @@
 
 class AccessTokens():
 	def __init__(self):
-		print("\nAccessTokens Object created.\n")
+		# print("\nAccessTokens Object created.\n")
 
 		#read access tokens from external file
 		filepath = '/Users/emi_buliga/Desktop/tokens.txt'
