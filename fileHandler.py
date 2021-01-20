@@ -6,7 +6,7 @@ class FileHandler:
 
 	#creates a new entry in the specified file from the 'trades' directory
 	def newEntry_liveData(self, file, content):
-		f = open("price data/" + file, 'a+')
+		f = open("price data/" + file + "_data", 'a+')
 		f.write(content + "\n")
 		f.close()
 
