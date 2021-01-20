@@ -64,9 +64,9 @@ class LiveDataStream():
 		return self.currencyPairs.split(',')
 
 
-liveStream = LiveDataStream("EUR_USD,EUR_GBP")
-liveStream.streamData()
-print(liveStream.getStreamingCurrencyPairs())
+# liveStream = LiveDataStream("EUR_USD,EUR_GBP")
+# liveStream.streamData()
+# print(liveStream.getStreamingCurrencyPairs())
 
 
 
