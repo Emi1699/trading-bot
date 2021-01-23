@@ -20,10 +20,12 @@ class User:
 			units = tradeInfo[0]
 			instrument = str(tradeInfo[1])
 
-			if instrument == 'eg':
+			if instrument == 'eurgbp':
 				self.openPosition(units, "EUR_GBP")
-			elif instrument == 'eu':
+			elif instrument == 'eurusd':
 				self.openPosition(units, "EUR_USD")
+			else:
+				print(">--<! INVALID INSTRUMENT !>--<")
 
 		#ops = open positions
 		#[OPTS] = [units, instrument, amount]
@@ -33,9 +35,9 @@ class User:
 			instrument = str(tradeInfo[1])
 			amount = tradeInfo[2]
 
-			if instrument == 'eg':
+			if instrument == 'eurgbp':
 				self.openPositions(units, "EUR_GBP", amount)
-			elif instrument == 'eu':
+			elif instrument == 'eurusd':
 				self.openPositions(units, "EUR_USD", amount)
 
 		#ct = close trade
@@ -60,7 +62,7 @@ class User:
 	#open a position of x units for the desired instrument
 	def openPosition(self, units, instrument):
 		self.Trade.placeTrade(units, instrument)
-		print(self.name + " placed a trade for " + str(units) + " units in " + instrument + "  ~~")
+		print(self.name + " placed a trade for " + str(units) + " units in " + instrument + "  ~~\n")
 
 		if instrument not in self.activeInstruments:
 			self.activeInstruments.append(instrument)
@@ -78,7 +80,7 @@ class User:
 	#close a single trade (soecified by its ID)
 	def closeTrade(self, tradeID):
 		info = self.Trade.closeTrade(tradeID)
-		print(self.name + " closed trade " + info)
+		print(self.name + " closed trade " + info + "\n")
 
 	#close the desired (specified by argument) trades
 	def closeTrades(self, tradeIDs):
@@ -105,16 +107,18 @@ class User:
 		for tradeID in self.getOpenPositions(instrument):
 			self.closeTrade(int(tradeID[-3:]))
 
-		print("All positions in " + instrument + " have been closed.")
+		print("All positions in " + instrument + " have been closed.\n")
 
+	#### !!!!!! WORK IN PROGRESS !!! ############################
 	#close ALL open positions (for all instruments)
 	def closeAllOpenPositions(self):
 		for instrument in self.activeInstruments:
 			if not self.fileHandler.isEmpty(instrument):
 				self.closeAllTradesIn(instrument)
 
-		print("CLOSED ALL OPEN POSITIONS!")
+		print("CLOSED ALL OPEN POSITIONS!\n")
 
-user = User("emi")
+user = User("Emi")
+# user.streamLiveQuotes("EUR_GBP,EUR_USD")
 # user.placeTrade(100, "EUR_GBP")
 # user.closeTrades([191])

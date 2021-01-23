@@ -1,4 +1,3 @@
-
 class AccessTokens():
 	def __init__(self):
 		# print("\nAccessTokens Object created.\n")
@@ -15,4 +14,3 @@ class AccessTokens():
 
 	def accToken(self):
 		return self.tokens[1]
-
