@@ -1,8 +1,33 @@
 from twelvedata import TDClient
 import toks
-td = TDClient(toks.AccessTokens().TDtoken())
 
 
+class ForexData():
+	def __init__(self):
+		self.client = TDClient(toks.AccessTokens().TDtoken())
+		self.technicalIndicators = ["bbands", "rsi"]
+
+	def getLastCandle(self, currencyPair, period, output = 1):
+		ts = self.client.time_series(
+		    symbol = currencyPair,
+		    outputsize = output,
+		    interval = period
+		)
+
+		return ts
+
+	def getDataWithIndicators(self, currencyPair, period, output = 1):
+		ts = self.getLastCandle(currencyPair, period, output)
+		if "bbands" in self.technicalIndicators:
+			ts = ts.with_bbands()
+		if "macd" in self.technicalIndicators:
+			ts = ts.with_macd()
+		if "rsi" in self.technicalIndicators:
+			ts = ts.with_rsi()
+
+		return ts.as_pandas()
+
+	# def getLast
 # ts = td.time_series(
 #     symbol="EUR/USD",
 #     interval="1min",
@@ -17,17 +42,22 @@ td = TDClient(toks.AccessTokens().TDtoken())
 # print(ts)
 # print(df)
 
-ts = td.time_series(
-    symbol="EUR/USD",
-    outputsize=1,
-    interval="1min",
-)
+
 # 1. Returns OHLCV chart
 # ts.as_pyplot_figure()
 # print(ts.as_pandas())
 
 # 2. Returns OHLCV + BBANDS(close, 20, 2, SMA) + %B(close, 20, 2 SMA) + STOCH(14, 3, 3, SMA, SMA)
-df = ts.with_ma(dp="10").with_rsi(dp="10").with_macd(dp="10").with_bbands(dp="10").with_stoch().with_atr().as_json()
-print(df['datetime']) #with_sar
+# df = ts.with_ma(dp="10").with_rsi(dp="10").with_macd(dp="10").with_stoch().with_atr().as_json()
+# print(df.with_bbands(dp="10")) #with_sar
 
-df.to_csv(r"df.csv", index = False)
+# df.to_csv(r"df.csv", index = False)
+
+data = ForexData()
+print(data.getDataWithIndicators("GME", "1min"))
+
+
+
+
+
+
