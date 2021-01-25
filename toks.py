@@ -14,3 +14,6 @@ class AccessTokens():
 
 	def accToken(self):
 		return self.tokens[1]
+
+	def TDtoken(self):
+		return self.tokens[2]
