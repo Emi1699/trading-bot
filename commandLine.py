@@ -29,5 +29,6 @@ class CommandLine:
     #     print(help, file=sys.stderr)
 
 
-cmd = CommandLine()
-cmd.getArgs()
+# cmd = CommandLine()
+# print(cmd.getArgs())
+# print(cmd.getOptions())

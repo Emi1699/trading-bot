@@ -1,31 +1,52 @@
 from twelvedata import TDClient
 import toks
+from datetime import datetime
 
 
 class ForexData():
-	def __init__(self):
+	today = datetime.today().strftime('%Y-%m-%d')
+
+	def __init__(self, currencyPair, interval, endDate, output = 1, startDate = "1901-01-01"):
 		self.client = TDClient(toks.AccessTokens().TDtoken())
 		self.technicalIndicators = ["bbands", "rsi"]
+		self.currencyPair = currencyPair
+		self.startDate = startDate
+		self.endDate = endDate
+		self.interval = interval
+		self.output = output
 
-	def getLastCandle(self, currencyPair, period, output = 1):
+	def getPriceData(self):
 		ts = self.client.time_series(
-		    symbol = currencyPair,
-		    outputsize = output,
-		    interval = period
+		    symbol = self.currencyPair,
+		    outputsize = self.output,
+		    interval = self.interval,
+		    start_date = self.startDate,
+		    end_date = self.endDate,
+		    timezone = "Europe/Bucharest"
 		)
 
 		return ts
 
-	def getDataWithIndicators(self, currencyPair, period, output = 1):
-		ts = self.getLastCandle(currencyPair, period, output)
+	def getDataWithIndicators(self):
+		ts = self.getPriceData()
 		if "bbands" in self.technicalIndicators:
 			ts = ts.with_bbands()
 		if "macd" in self.technicalIndicators:
 			ts = ts.with_macd()
 		if "rsi" in self.technicalIndicators:
 			ts = ts.with_rsi()
+		if "macd" in self.technicalIndicators:
+			ts = ts.with_macd()
+		if "ichimoku" in self.technicalIndicators:
+			ts = ts.with_ichimoku()
 
 		return ts.as_pandas()
+
+	def setInterval(self, interval):
+		self.interval = interval
+
+	def setTechnicalIndicators(self, indicators):
+		self.technicalIndicators = indicators.split(' ')
 
 	# def getLast
 # ts = td.time_series(
@@ -53,9 +74,9 @@ class ForexData():
 
 # df.to_csv(r"df.csv", index = False)
 
-data = ForexData()
-print(data.getDataWithIndicators("GME", "1min"))
-
+data = ForexData("EUR/USD", "1day", ForexData.today, 5000)
+data.setTechnicalIndicators("macd")
+dtt = data.getDataWithIndicators()
 
 
 
