@@ -1,16 +1,16 @@
 from twelvedata import TDClient
 import toks
 from datetime import datetime
-
+from today import Today
 
 class ForexData():
-	today = datetime.today().strftime('%Y-%m-%d')
+	today = Today().datetime()
 
-	def __init__(self, currencyPair, interval, endDate, output = 1, startDate = "1901-01-01"):
+	def __init__(self, currencyPair, interval, endDate, output = 1):
 		self.client = TDClient(toks.AccessTokens().TDtoken())
-		self.technicalIndicators = ["bbands", "rsi"]
+		self.technicalIndicators = ["bbands", "rsi", "macd", "stoch"]
 		self.currencyPair = currencyPair
-		self.startDate = startDate
+		# self.startDate = startDate
 		self.endDate = endDate
 		self.interval = interval
 		self.output = output
@@ -20,7 +20,7 @@ class ForexData():
 		    symbol = self.currencyPair,
 		    outputsize = self.output,
 		    interval = self.interval,
-		    start_date = self.startDate,
+		    # start_date = self.startDate,
 		    end_date = self.endDate,
 		    timezone = "Europe/Bucharest"
 		)
@@ -35,12 +35,14 @@ class ForexData():
 			ts = ts.with_macd()
 		if "rsi" in self.technicalIndicators:
 			ts = ts.with_rsi()
-		if "macd" in self.technicalIndicators:
-			ts = ts.with_macd()
 		if "ichimoku" in self.technicalIndicators:
 			ts = ts.with_ichimoku()
+		if "stoch" in self.technicalIndicators:
+			ts = ts.with_stoch()
+		if "ma" in self.technicalIndicators:
+			ts = ts.with_ma()
 
-		return ts.as_pandas()
+		return ts
 
 	def setInterval(self, interval):
 		self.interval = interval
@@ -48,37 +50,25 @@ class ForexData():
 	def setTechnicalIndicators(self, indicators):
 		self.technicalIndicators = indicators.split(' ')
 
-	# def getLast
-# ts = td.time_series(
-#     symbol="EUR/USD",
-#     interval="1min",
-#     outputsize = 5000,
-#     start_date="2020-04-10 21:18:00",
-#     # end_date="2012-03-09",
-#     dp = 6,
-#     timezone = "Europe/Bucharest"
-# ).as_pandas()
-# df = ts.with_bbands(ma_type="EMA").with_plus_di().with_wma(time_period=20).with_wma(time_period=40).as_pandas()
 
-# print(ts)
-# print(df)
+def strToTime(time):
+	return datetime.strptime(time, '%Y-%m-%d %H:%M:%S')
+
+today = ForexData.today
+
+# date_time_str = '2018-06-29 08:15:27.243860'
+# date_time_obj = datetime.datetime.strptime(date_time_str, '%Y-%m-%d %H:%M:%S.%f')
+
+endDate = strToTime(str("2020-07-15 12:36:00"))
+interval = 1
+dataPoints = 5000
 
 
-# 1. Returns OHLCV chart
-# ts.as_pyplot_figure()
-# print(ts.as_pandas())
+while True:
+	data = ForexData("EUR/USD", str(interval) + "min", endDate, dataPoints)
+	dtt = data.getDataWithIndicators().as_pandas()
+	dtt.to_csv("price data/emi.csv", float_format='%.5f', mode = 'a', header = False)
 
-# 2. Returns OHLCV + BBANDS(close, 20, 2, SMA) + %B(close, 20, 2 SMA) + STOCH(14, 3, 3, SMA, SMA)
-# df = ts.with_ma(dp="10").with_rsi(dp="10").with_macd(dp="10").with_stoch().with_atr().as_json()
-# print(df.with_bbands(dp="10")) #with_sar
-
-# df.to_csv(r"df.csv", index = False)
-
-data = ForexData("EUR/USD", "1day", ForexData.today, 5000)
-data.setTechnicalIndicators("macd")
-dtt = data.getDataWithIndicators()
-
-
-
+	endDate = strToTime(str(dtt.index[dataPoints - 1]))
 
 
