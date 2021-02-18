@@ -22,18 +22,14 @@ import tensorflow as tf
 mpl.rcParams['figure.figsize'] = (8, 6)
 mpl.rcParams['axes.grid'] = False
 
-# zip_path = tf.keras.utils.get_file(
-#     origin='https://storage.googleapis.com/tensorflow/tf-keras-datasets/jena_climate_2009_2016.csv.zip',
-#     fname='jena_climate_2009_2016.csv.zip',
-#     extract=True)
-# csv_path, _ = os.path.splitext(zip_path)
-
-df = pd.read_csv("EUR_USD-1min.csv")
+df = pd.read_csv("../price data/EUR_USD-1min.csv")
 # slice [start:stop:step], starting from index 5 take every 6th record.
 # df = df[5::2]
 date_time = pd.to_datetime(df.pop('datetime'), format='%Y-%m-%d %H:%M:%S')
 
+# print(date_time)
 # print(df.head())
+
 
 # plot_cols = ['open', 'high', 'low', 'close']
 # plot_features = df[plot_cols]
@@ -46,7 +42,7 @@ date_time = pd.to_datetime(df.pop('datetime'), format='%Y-%m-%d %H:%M:%S')
 
 # plt.show()
 
-print(df.describe().transpose())
+# print(df.describe().transpose())
 
 # wv = df['wv (m/s)']
 # bad_wv = wv == -9999.0
@@ -118,9 +114,7 @@ plt.figure(figsize=(12, 6))
 ax = sns.violinplot(x='Column', y='Normalized', data=df_std)
 _ = ax.set_xticklabels(df.keys(), rotation=90)
 
-
 plt.show()
-
 
 #_______________
 

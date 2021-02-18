@@ -120,5 +120,5 @@ class User:
 
 user = User("Emi")
 # user.streamLiveQuotes("EUR_GBP,EUR_USD")
-# user.placeTrade(100, "EUR_GBP")
+user.openPosition(100, "EUR_GBP")
 # user.closeTrades([191])

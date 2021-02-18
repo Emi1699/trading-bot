@@ -2,6 +2,7 @@ from twelvedata import TDClient
 import toks
 from datetime import datetime
 from today import Today
+import time
 
 class ForexData():
 	today = Today().datetime()
@@ -59,16 +60,27 @@ today = ForexData.today
 # date_time_str = '2018-06-29 08:15:27.243860'
 # date_time_obj = datetime.datetime.strptime(date_time_str, '%Y-%m-%d %H:%M:%S.%f')
 
-endDate = strToTime(str("2020-07-15 12:36:00"))
-interval = 1
-dataPoints = 5000
+endDate = today #strToTime(str("2021-01-11 16:20:00"))
+interval = 5
+dataPoints = 5
 
 
-while True:
-	data = ForexData("EUR/USD", str(interval) + "min", endDate, dataPoints)
-	dtt = data.getDataWithIndicators().as_pandas()
-	dtt.to_csv("price data/emi.csv", float_format='%.5f', mode = 'a', header = False)
+# while True:
+# 	data = ForexData("EUR/USD", str(interval) + "min", endDate, dataPoints)
+# 	dtt = data.getDataWithIndicators().as_pandas()
+# 	dtt.to_csv("price data/emi.csv", float_format='%.5f', mode = 'a', header = False)
 
-	endDate = strToTime(str(dtt.index[dataPoints - 1]))
+# 	endDate = strToTime(str(dtt.index[dataPoints - 1]))
+# 	print("Requested. Sleeping...")
+# 	time.sleep(10)
 
+
+print(datetime.strptime('2018-06-29 08:15:27.243860') datetime.datetime.timedelta())
+
+
+
+
+
+
+#########
 
