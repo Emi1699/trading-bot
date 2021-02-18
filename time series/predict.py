@@ -15,8 +15,8 @@ import tensorflow as tf
 # This tutorial uses a weather time series dataset recorded by the Max Planck Institute for Biogeochemistry.
 
 # This dataset contains 14 different features such as air temperature, atmospheric pressure, and humidity.
-#  These were collected every 10 minutes, beginning in 2003. For efficiency, you will use only the data collected 
-#  between 2009 and 2016. This section of the dataset was prepared by François Chollet for his book Deep Learning 
+#  These were collected every 10 minutes, beginning in 2003. For efficiency, you will use only the data collected
+#  between 2009 and 2016. This section of the dataset was prepared by François Chollet for his book Deep Learning
 # with Python.
 
 mpl.rcParams['figure.figsize'] = (8, 6)
@@ -117,13 +117,3 @@ _ = ax.set_xticklabels(df.keys(), rotation=90)
 plt.show()
 
 #_______________
-
-
-
-
-
-
-
-
-
-

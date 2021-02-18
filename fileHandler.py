@@ -49,14 +49,3 @@ class FileHandler:
 			return True
 
 		return False
-
-
-
-
-
-
-
-
-
-
-

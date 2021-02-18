@@ -73,7 +73,3 @@ trade = Trade()
 trade.placeTrade(1000, "EUR_GBP")
 # trade.closeTrade(134)
 # trade.closeTrade(137)
-
-
-
-

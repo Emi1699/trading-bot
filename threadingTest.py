@@ -50,4 +50,3 @@ with concurrent.futures.ThreadPoolExecutor() as executor:
 finish = time.perf_counter()
 
 print(f'Finished in {round(finish - start, 2)} second(s)')
-

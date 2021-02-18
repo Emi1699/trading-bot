@@ -83,4 +83,3 @@ print(datetime.strptime('2018-06-29 08:15:27.243860') datetime.datetime.timedelt
 
 
 #########
-

@@ -67,7 +67,3 @@ class LiveDataStream():
 # liveStream = LiveDataStream("EUR_USD,EUR_GBP")
 # liveStream.streamData()
 # print(liveStream.getStreamingCurrencyPairs())
-
-
-
-
