@@ -61,6 +61,7 @@ def strToTime(time):
 endDate = Today().datetime()
 print("last time: " + str(endDate))
 
+#get a times * 5000 datapoints in the corresponding pair file file
 def getBatchToFiles(pair, interval, dataPoints, endDate, times = 4):
 	for _ in range(times):
 		print("requesting " + str(pair) + "...")
@@ -76,7 +77,7 @@ def getBatchToFiles(pair, interval, dataPoints, endDate, times = 4):
 		time.sleep(15)
 
 forexPairs = ["USD/JPY", "GBP/USD", "EUR/GBP", "EUR/USD"]
-interval = 15
+interval = 1
 dataPoints = 5000
 
 for pair in forexPairs:
