@@ -51,6 +51,6 @@ class FileHandler:
 		return False
 
 	def writeToFile(self, fileName, content):
-		f = open("price data/" + fileName, 'a+')
+		f = open(fileName, 'a+')
 		f.write(content + "\n")
 		f.close()

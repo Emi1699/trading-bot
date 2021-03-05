@@ -76,12 +76,12 @@ def getBatchToFiles(pair, interval, dataPoints, endDate, times = 4):
 		print("Done. Waiting for next batch...\n\n")
 		time.sleep(15)
 
-forexPairs = ["USD/JPY", "GBP/USD", "EUR/GBP", "EUR/USD"]
-interval = 1
+forexPairs = ["USD/EUR", "USD/JPY", "GBP/USD", "EUR/GBP", "EUR/USD"]
+interval = 15 #minutes interval  (e.g. 1min, 10min, 15min, etc)
 dataPoints = 5000
 
 for pair in forexPairs:
-	FileHandler().writeToFile(pair[:3] + "_" + pair[4:], "datetime,open,high,low,close,ma1,ma2,ma3,ma4,ma5,wma1,wma2,wma3,wma4,wma5,upper_band1,middle_band1,lower_band1,upper_band2,middle_band2,lower_band2,upper_band3,middle_band3,lower_band3,upper_band4,middle_band4,lower_band4,upper_band5,middle_band5,lower_band5,rsi1,rsi2,rsi3,rsi4,rsi5")
+	FileHandler().writeToFile("price data/" + str(interval) + "min/" + pair[:3] + "_" + pair[4:], "datetime,open,high,low,close,ma1,ma2,ma3,ma4,ma5,wma1,wma2,wma3,wma4,wma5,upper_band1,middle_band1,lower_band1,upper_band2,middle_band2,lower_band2,upper_band3,middle_band3,lower_band3,upper_band4,middle_band4,lower_band4,upper_band5,middle_band5,lower_band5,rsi1,rsi2,rsi3,rsi4,rsi5")
 	getBatchToFiles(pair, interval, dataPoints, endDate)
 
 # emi = "usd/jpy"
