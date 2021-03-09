@@ -79,9 +79,9 @@ def getBatchToFiles(pair, interval, dataPoints, endDate, path, times = 4):
 forexPairs = ["USD/JPY", "GBP/USD", "EUR/GBP", "EUR/USD"]
 interval = 1 #minutes interval  (e.g. 1min, 10min, 15min, etc)
 dataPoints = 5000
-path = "price data/" + str(interval) + "min/" + pair[:3] + "_" + pair[4:]
 
-for pair in forexPairs:
+for pair in forexPairs[:2]:
+	path = "price data/" + str(interval) + "min/" + pair[:3] + "_" + pair[4:]
 	FileHandler().writeToFile(path, "datetime,open,high,low,close,ma1,ma2,ma3,ma4,ma5,wma1,wma2,wma3,wma4,wma5,upper_band1,middle_band1,lower_band1,upper_band2,middle_band2,lower_band2,upper_band3,middle_band3,lower_band3,upper_band4,middle_band4,lower_band4,upper_band5,middle_band5,lower_band5,rsi1,rsi2,rsi3,rsi4,rsi5")
 	getBatchToFiles(pair, interval, dataPoints, endDate, path)
 
